@@ -10,7 +10,7 @@ PLAN
 - voir events
 
 - Technologies:
-- Angular
+- Angular (react)
 - Electron / (maybe neutralinoJS)
 
 - Stocker events:

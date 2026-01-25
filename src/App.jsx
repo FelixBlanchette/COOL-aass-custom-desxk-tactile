@@ -3,7 +3,6 @@ import './App.css'
 function App() {
 
   function onclick (){
-    console.log(window, window.electronAPI)
     window.electronAPI.closeApp()
   }
 

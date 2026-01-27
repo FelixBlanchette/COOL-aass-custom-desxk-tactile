@@ -4,8 +4,8 @@
   "description": "Calendrier",
   "main": "app/main.js",
   "scripts": {
-    "dev": "concurrently \"npm:start-electron\" \"npm:start-react\"",
-    "start-electron": "wait-on http://localhost:5173 && electron .",
+    "dev": "concurrently --kill-others \"npm:start-app\" \"npm:start-react\"",
+    "start-app": "wait-on http://localhost:5173 && electron .",
     "start-react": "vite",
     "build": "vite build"
   },
@@ -17,7 +17,7 @@
     "electron": "40.0.0",
     "concurrently": "^8.0.0",
     "wait-on": "^7.0.0",
-    "express": "5.2.1"
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

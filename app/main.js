@@ -33,14 +33,12 @@ function createWindow() {
 app.whenReady().then(()=>{
     const appWindow = createWindow()
 
-    serverProcess = spawn("node", [path.join(__dirname, "..", "backend", "server.js")], {stdio: "inherit"})
-
+    serverProcess = spawn("node", [path.join(__dirname, "..", "backend", "server.js")], {stdio: "inherit", windowsHide:true})
 
     // DEFINE COMMANDS
     ipcMain.on(COMMANDS.EXIT_APP, () => {
         appWindow.close()
     })
-
 })
 
 app.on("window-all-closed", ()=>{

@@ -15,12 +15,18 @@ wss.on("connection", ws=>{
 
     ws.on("message", message=>{
         const msg = JSON.parse(message.toString())
-        handleCommand(msg.type, ws, msg.value&&JSON.parse(msg.value))
+        handleCommand(msg.type, ws, msg)
     })
 })
 
 function send(ws, obj) {
     ws.send(JSON.stringify(obj))
+}
+
+function sendResponse(ws, obj, response) {
+        if (obj?.RESPONSE_ID) response.RESPONSE_ID = obj?.RESPONSE_ID
+        response.type = WS_COMMANDS.RESPONSE
+        send(ws, response)
 }
 
 // HANDLE INCOMING COMMANDS FROM FRONTEND
@@ -32,17 +38,19 @@ function handleCommand(type, ws, obj) {
     }
     else if (type === WS_COMMANDS.PING) {
         console.log("SERVER PING")
-        send(ws, {type:WS_COMMANDS.RESPONSE, value:"Hey man! working"})
+        sendResponse(ws, obj, {value:"Hey man! working"})
     }
     else if (type === WS_COMMANDS.GET_SAVE) {
         getSavedCalendar((err, data, path)=>{
             console.log("READING FILE, value:", data, "PATH",path)
-            if (err) send(ws, {type:WS_COMMANDS.RESPONSE, value:null})
-            else send(ws, {type:WS_COMMANDS.RESPONSE, value:data})
+            if (err) sendResponse(ws, obj, {value:err})
+            else sendResponse(ws, obj, {value:data})
+            
         })
     }
     else if (type === WS_COMMANDS.SET_SAVE) {
-        console.log("SETTING FILE, value:", obj)
-        setSavedCalendar(obj)
+        console.log("SETTING FILE, value:", obj.value)
+        setSavedCalendar(obj.value)
+        sendResponse(ws, obj, {value:obj.value})
     }
 }

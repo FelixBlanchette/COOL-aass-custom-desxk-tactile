@@ -9,7 +9,7 @@
     "start-react": "vite",
     "build": "vite build"
   },
-  "author": "Cool man",
+  "author": "Cool men",
   "type": "module",
   "dependencies": {
     "react": "^18.3.1",
@@ -17,7 +17,8 @@
     "electron": "40.0.0",
     "concurrently": "^8.0.0",
     "wait-on": "^7.0.0",
-    "ws": "^8.18.0"
+    "ws": "^8.18.0",
+    "express": "5.2.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

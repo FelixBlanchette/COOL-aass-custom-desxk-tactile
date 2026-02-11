@@ -1,11 +1,34 @@
 import { WebSocketServer } from "ws"
 import { WS_COMMANDS } from "../src/assets/scripts/webSocketCommands.js"
 import { getSavedCalendar, setSavedCalendar } from "./calendarSaving.js"
+import express from "express"
 
-const PORT = 3000, wss = new WebSocketServer({port:PORT}, ()=>{
+const PORT_WS = 3000, PORT_EXPRESS = 3001
+
+
+const wss = new WebSocketServer({port:PORT_WS}, ()=>{
     console.clear()
-    console.log("\nWEBSOCKET SERVER RUNNING, (ws://localhost:"+PORT+")")
+    console.log("\nWEBSOCKET SERVER RUNNING, (ws://0.0.0.0:"+PORT_WS+")")
+}), app = express()
+
+app.use(express.json())
+
+
+app.listen(PORT_EXPRESS, "172.16.10.6", ()=>{
+    console.log("SERVER EXPRESS", "172.16.10.6")
 })
+
+app.get("/singe", (req, res)=>{
+    console.log("YO", res.socket.remoteAddress)
+    res.send("BURGER TOWN", res.socket.remoteAddress)
+})
+
+app.get("/", (req, res)=>{
+    console.log("YO")
+    res.send("index.htnl or somthing")
+})
+
+
 
 // INIT WS SERVER
 wss.on("connection", ws=>{
